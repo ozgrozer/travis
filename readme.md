@@ -2,11 +2,11 @@
 
 A desktop app to scrape web pages
 
-<img src="preview.jpg" alt="travis preview" width="612" />
+<img src="preview.jpg" alt="travis preview" width="500" />
 
 ## Download
 
-[MacOS](https://github.com/ozgrozer/travis/releases/download/v0.0.3/travis-0.0.3-mac.zip)
+[MacOS](https://github.com/ozgrozer/travis/releases/download/v0.0.1/travis-0.0.1-mac.zip)
 
 ## Contribution
 
