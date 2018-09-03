@@ -1,0 +1,10 @@
+<!doctype html>
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title #{defaults.name}
+    link(rel="stylesheet", href="index.css")
+  body
+    #root
+    script!= 'window.defaults = ' + JSON.stringify(defaults) + ';'
+    script(src="./index.js")
