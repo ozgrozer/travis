@@ -4,10 +4,11 @@
   "author": "ozgrozer",
   "main": "app/electron.js",
   "scripts": {
-    "start-parcel": "parcel ./app/frontend/js/index.jsx --out-dir ./public --public-url / --port 1125",
+    "start-parcel": "parcel ./app/frontend/js/index.jsx --out-dir ./app/public --public-url / --port 1125",
     "start-electron": "electron .",
-    "prebuild": "parcel build ./app/frontend/js/index.jsx --out-dir ./public --public-url / --no-source-maps",
-    "build": "build -p always"
+    "prebuild": "parcel build ./app/frontend/js/index.jsx --out-dir ./app/public --public-url / --no-source-maps",
+    "build": "build -p always",
+    "build-electron": "build -m"
   },
   "engines": {
     "node": "^10.4.1",
