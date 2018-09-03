@@ -27,6 +27,8 @@
     "parcel-bundler": "^1.9.7"
   },
   "build": {
+    "asar": true,
+    "asarUnpack": "app/node_modules/puppeteer/.local-chromium/**/*",
     "appId": "com.ozgrozer.travis",
     "mac": {
       "category": "productivity",
