@@ -2,12 +2,11 @@
   "name": "travis",
   "description": "A desktop app to scrape web pages",
   "author": "ozgrozer",
-  "version": "0.0.1",
-  "main": "electron.js",
+  "main": "app/electron.js",
   "scripts": {
-    "start-parcel": "parcel ./src/frontend/js/index.jsx --out-dir ./public --public-url / --port 1125",
+    "start-parcel": "parcel ./app/frontend/js/index.jsx --out-dir ./public --public-url / --port 1125",
     "start-electron": "electron .",
-    "prebuild": "parcel build ./src/frontend/js/index.jsx --out-dir ./public --public-url / --no-source-maps",
+    "prebuild": "parcel build ./app/frontend/js/index.jsx --out-dir ./public --public-url / --no-source-maps",
     "build": "build -p always"
   },
   "engines": {
@@ -15,6 +14,9 @@
     "npm": "^6.1.0"
   },
   "license": "MIT",
+  "dependencies": {
+    "electron-updater": "^3.1.2"
+  },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -24,25 +26,8 @@
     "node-sass": "^4.9.3",
     "parcel-bundler": "^1.9.7"
   },
-  "dependencies": {
-    "electron-updater": "^3.1.2",
-    "express": "^4.16.3",
-    "pug": "^2.0.3",
-    "puppeteer": "^1.7.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "recassfov": "^0.0.31"
-  },
   "build": {
-    "asar": true,
-    "asarUnpack": "node_modules/puppeteer/.local-chromium/**/*",
     "appId": "com.ozgrozer.travis",
-    "files": [
-      "electron.js",
-      "node_modules",
-      "public/**/*",
-      "src"
-    ],
     "mac": {
       "category": "productivity",
       "target": [

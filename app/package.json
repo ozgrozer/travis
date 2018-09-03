@@ -1,0 +1,14 @@
+{
+  "name": "travis",
+  "version": "0.0.2",
+  "main": "electron.js",
+  "dependencies": {
+    "electron-updater": "^3.1.2",
+    "express": "^4.16.3",
+    "pug": "^2.0.3",
+    "puppeteer": "^1.7.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "recassfov": "^0.0.31"
+  }
+}
