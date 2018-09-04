@@ -6,7 +6,7 @@ A desktop app to scrape web pages
 
 ## Download
 
-[MacOS](https://github.com/ozgrozer/travis/releases/download/v0.0.4/travis-0.0.4-mac.zip)
+[MacOS](https://github.com/ozgrozer/travis/releases/download/v0.0.6/travis-0.0.6-mac.zip)
 
 ## Contribution
 
