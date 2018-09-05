@@ -11,15 +11,14 @@ const getItemLinks = async (opts) => {
     await page.goto(opts.itemsUrl, { waitUntil: 'networkidle2' })
     await page.setViewport({ width: 1395, height: 780 })
 
-    const selector = opts.itemsSelector
-    const getItems = await page.evaluate((selector, opts) => {
-      const elements = Array.from(document.querySelectorAll(selector))
+    const getItems = await page.evaluate((opts) => {
+      const elements = Array.from(document.querySelectorAll(opts.itemsSelector))
       const el = {}
       elements.map((element, i) => {
-        el[i + 1] = element[opts.itemsAttributeToScrape]
+        el[i + 1] = element.getAttribute(opts.itemsAttributeToScrape)
       })
       return el
-    }, selector, opts)
+    }, opts)
 
     await browser.close()
 
