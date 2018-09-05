@@ -29,20 +29,32 @@ const getItemLinks = async (opts) => {
   }
 }
 
-const download = (req, res) => {
-  const result = {
-    success: false
+const download = async (req, res) => {
+  const result = { success: false }
+
+  try {
+    const _getItemLinks = await getItemLinks(req.body)
+
+    let exportFileContent
+    if (req.body.exportFormat === 'json') {
+      exportFileContent = JSON.stringify(_getItemLinks)
+    } else if (req.body.exportFormat === 'csv') {
+      let str = `key,value\n`
+      Object.keys(_getItemLinks).map((key) => {
+        const value = _getItemLinks[key]
+        str += `${key},${value}\n`
+      })
+      exportFileContent = str
+    }
+
+    fs.writeFileSync(req.body.exportPath, exportFileContent)
+
+    result.success = true
+    res.json(result)
+  } catch (err) {
+    result.error = err
+    res.json(result)
   }
-  getItemLinks(req.body)
-    .then((response) => {
-      fs.writeFileSync(req.body.downloadPath, JSON.stringify(response))
-      result.success = true
-      res.json(result)
-    })
-    .catch((err) => {
-      result.error = err
-      res.json(result)
-    })
 }
 
 module.exports = download

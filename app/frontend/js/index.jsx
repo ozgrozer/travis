@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Form, Input } from 'recassfov'
+import { Form, Input, Select } from 'recassfov'
 
 import './../css/style.scss'
 
@@ -9,6 +9,7 @@ class App extends React.Component {
     super()
 
     this.state = {
+      exportPath: window.defaults.exportPath,
       downloadButtonTitle: 'Download',
       isFormDisabled: false
     }
@@ -32,6 +33,31 @@ class App extends React.Component {
     }
   }
 
+  exportFormatOnChange (e) {
+    const value = e.target.value
+    const getExportPath = this.state.exportPath
+    const splitDownloadFormat = getExportPath.split('.')
+    const getDownloadFormat = splitDownloadFormat[splitDownloadFormat.length - 1]
+
+    let newExportPath
+    if (value === 'csv' && getDownloadFormat === 'json') {
+      newExportPath = getExportPath.substring(0, getExportPath.length - 4) + 'csv'
+    } else if (value === 'json' && getDownloadFormat === 'csv') {
+      newExportPath = getExportPath.substring(0, getExportPath.length - 3) + 'json'
+    } else if (!getExportPath) {
+      newExportPath = window.defaults.exportPath.substring(0, window.defaults.exportPath.length - 4) + value
+    } else {
+      newExportPath = getExportPath + '.' + value
+    }
+
+    this.setState({ exportPath: newExportPath })
+  }
+
+  exportPathOnChange (e) {
+    const value = e.target.value
+    this.setState({ exportPath: value })
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -49,13 +75,28 @@ class App extends React.Component {
             headers={{ 'Content-Type': 'application/json' }}>
             <fieldset disabled={this.state.isFormDisabled}>
               <div className='form-group'>
-                <label htmlFor='downloadPath'>Download path</label>
+                <label htmlFor='exportFormat'>Export format</label>
+                <Select
+                  type='text'
+                  id='exportFormat'
+                  name='exportFormat'
+                  value='json'
+                  onChange={this.exportFormatOnChange.bind(this)}
+                  className='form-control form-control-sm'>
+                  <option value='json'>JSON</option>
+                  <option value='csv'>CSV</option>
+                </Select>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='exportPath'>Export path</label>
                 <Input
                   type='text'
-                  id='downloadPath'
-                  name='downloadPath'
-                  placeholder={window.defaults.downloadPath}
-                  value={window.defaults.downloadPath}
+                  id='exportPath'
+                  name='exportPath'
+                  placeholder={this.state.exportPath}
+                  value={this.state.exportPath}
+                  onChange={this.exportPathOnChange.bind(this)}
                   className='form-control form-control-sm' />
               </div>
 
