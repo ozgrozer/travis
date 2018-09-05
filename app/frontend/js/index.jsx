@@ -4,6 +4,26 @@ import { Form, Input, Select } from 'recassfov'
 
 import './../css/style.scss'
 
+const validations = {
+  exportPath: [
+    {
+      rule: 'isLength',
+      args: { min: 1 }
+    }
+  ],
+  itemsUrl: [
+    {
+      rule: 'isURL'
+    }
+  ],
+  itemsSelector: [
+    {
+      rule: 'isLength',
+      args: { min: 1 }
+    }
+  ]
+}
+
 class App extends React.Component {
   constructor () {
     super()
@@ -68,7 +88,6 @@ class App extends React.Component {
         <div id='scroll'>
           <Form
             validFormBeforePost={this.handleForm.bind(this, { status: 'beforePost' })}
-            invalidFormBeforePost={this.handleForm.bind(this, { status: 'beforePost' })}
             validFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
             invalidFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
             postUrl={`http://localhost:${window.defaults.port}/download`}
@@ -97,6 +116,7 @@ class App extends React.Component {
                   placeholder={this.state.exportPath}
                   value={this.state.exportPath}
                   onChange={this.exportPathOnChange.bind(this)}
+                  validations={validations.exportPath}
                   className='form-control form-control-sm' />
               </div>
 
@@ -109,6 +129,7 @@ class App extends React.Component {
                   id='itemsUrl'
                   name='itemsUrl'
                   placeholder='https://www.amazon.com/gp/bestsellers/digital-text/8493719011/'
+                  validations={validations.itemsUrl}
                   className='form-control form-control-sm' />
               </div>
 
@@ -119,6 +140,7 @@ class App extends React.Component {
                   id='itemsSelector'
                   name='itemsSelector'
                   placeholder='span.aok-inline-block.zg-item > a.a-link-normal'
+                  validations={validations.itemsSelector}
                   className='form-control form-control-sm' />
               </div>
 
