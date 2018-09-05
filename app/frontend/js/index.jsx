@@ -3,26 +3,7 @@ import ReactDOM from 'react-dom'
 import { Form, Input, Select } from 'recassfov'
 
 import './../css/style.scss'
-
-const validations = {
-  exportPath: [
-    {
-      rule: 'isLength',
-      args: { min: 1 }
-    }
-  ],
-  itemsUrl: [
-    {
-      rule: 'isURL'
-    }
-  ],
-  itemsSelector: [
-    {
-      rule: 'isLength',
-      args: { min: 1 }
-    }
-  ]
-}
+import validations from './validations'
 
 class App extends React.Component {
   constructor () {
@@ -141,6 +122,17 @@ class App extends React.Component {
                   name='itemsSelector'
                   placeholder='span.aok-inline-block.zg-item > a.a-link-normal'
                   validations={validations.itemsSelector}
+                  className='form-control form-control-sm' />
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='itemsAttributeToScrape'>Items attribute to scrape</label>
+                <Input
+                  type='text'
+                  id='itemsAttributeToScrape'
+                  name='itemsAttributeToScrape'
+                  placeholder='href'
+                  validations={validations.itemsAttributeToScrape}
                   className='form-control form-control-sm' />
               </div>
 

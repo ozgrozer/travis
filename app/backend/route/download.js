@@ -12,14 +12,14 @@ const getItemLinks = async (opts) => {
     await page.setViewport({ width: 1395, height: 780 })
 
     const selector = opts.itemsSelector
-    const getItems = await page.evaluate((selector) => {
+    const getItems = await page.evaluate((selector, opts) => {
       const elements = Array.from(document.querySelectorAll(selector))
       const el = {}
       elements.map((element, i) => {
-        el[i + 1] = element.href
+        el[i + 1] = element[opts.itemsAttributeToScrape]
       })
       return el
-    }, selector)
+    }, selector, opts)
 
     await browser.close()
 
