@@ -52,10 +52,8 @@ class App extends React.Component {
 
         <div id='scroll'>
           <Form
-            onSubmit={() => console.log('onSubmit')}
             validFormBeforePost={this.handleForm.bind(this, { status: 'beforePost' })}
             validFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
-            invalidFormBeforePost={(res) => console.log(res)}
             invalidFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
             postUrl={`http://localhost:${window.defaults.port}/download`}
             headers={{ 'Content-Type': 'application/json' }}>

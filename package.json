@@ -9,7 +9,7 @@
     "build": "npm run build-parcel && npm run build-electron",
     "build-and-publish": "npm run build-parcel && npm run build-electron-and-publish && rm -rf ./dist",
     "build-parcel": "parcel build ./app/frontend/js/index.jsx --out-dir ./app/public --public-url / --no-source-maps",
-    "build-electron": "build -m",
+    "build-electron": "build -wm",
     "build-electron-and-publish": "build -p always"
   },
   "engines": {
