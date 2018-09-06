@@ -2,6 +2,8 @@ const fs = require('fs')
 const puppeteer = require('puppeteer')
 
 const getItemLinks = async (opts) => {
+  const result = { success: false }
+
   try {
     const browser = await puppeteer.launch({
       headless: true,
@@ -22,9 +24,17 @@ const getItemLinks = async (opts) => {
 
     await browser.close()
 
-    return getItems
+    if (getItems.length) {
+      result.success = true
+      result.items = getItems
+    } else {
+      result.error = 'No items found'
+    }
+
+    return result
   } catch (err) {
-    return err
+    result.error = err
+    return result
   }
 }
 
@@ -34,21 +44,26 @@ const download = async (req, res) => {
   try {
     const _getItemLinks = await getItemLinks(req.body)
 
-    let exportFileContent
-    if (req.body.exportFormat === 'json') {
-      exportFileContent = JSON.stringify(_getItemLinks)
-    } else if (req.body.exportFormat === 'csv') {
-      let str = `key,value\n`
-      Object.keys(_getItemLinks).map((key) => {
-        const value = _getItemLinks[key]
-        str += `${key},${value}\n`
-      })
-      exportFileContent = str
+    if (_getItemLinks.success) {
+      let exportFileContent
+      if (req.body.exportFormat === 'json') {
+        exportFileContent = JSON.stringify(_getItemLinks)
+      } else if (req.body.exportFormat === 'csv') {
+        let str = `key,value\n`
+        Object.keys(_getItemLinks).map((key) => {
+          const value = _getItemLinks[key]
+          str += `${key},${value}\n`
+        })
+        exportFileContent = str
+      }
+
+      fs.writeFileSync(req.body.exportPath, exportFileContent)
+
+      result.success = true
+    } else {
+      result.error = _getItemLinks.error
     }
 
-    fs.writeFileSync(req.body.exportPath, exportFileContent)
-
-    result.success = true
     res.json(result)
   } catch (err) {
     result.error = err
