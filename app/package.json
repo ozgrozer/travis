@@ -1,6 +1,6 @@
 {
   "name": "travis",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "electron.js",
   "dependencies": {
     "electron-updater": "^3.1.2",

@@ -10,7 +10,6 @@ class App extends React.Component {
     super()
 
     this.state = {
-      exportPath: window.defaults.exportPath,
       downloadButtonTitle: 'Download',
       isFormDisabled: false
     }
@@ -34,31 +33,6 @@ class App extends React.Component {
     }
   }
 
-  exportFormatOnChange (e) {
-    const value = e.target.value
-    const getExportPath = this.state.exportPath
-    const splitDownloadFormat = getExportPath.split('.')
-    const getDownloadFormat = splitDownloadFormat[splitDownloadFormat.length - 1]
-
-    let newExportPath
-    if (value === 'csv' && getDownloadFormat === 'json') {
-      newExportPath = getExportPath.substring(0, getExportPath.length - 4) + 'csv'
-    } else if (value === 'json' && getDownloadFormat === 'csv') {
-      newExportPath = getExportPath.substring(0, getExportPath.length - 3) + 'json'
-    } else if (!getExportPath) {
-      newExportPath = window.defaults.exportPath.substring(0, window.defaults.exportPath.length - 4) + value
-    } else {
-      newExportPath = getExportPath + '.' + value
-    }
-
-    this.setState({ exportPath: newExportPath })
-  }
-
-  exportPathOnChange (e) {
-    const value = e.target.value
-    this.setState({ exportPath: value })
-  }
-
   render () {
     return (
       <React.Fragment>
@@ -68,8 +42,10 @@ class App extends React.Component {
 
         <div id='scroll'>
           <Form
+            onSubmit={() => console.log('onSubmit')}
             validFormBeforePost={this.handleForm.bind(this, { status: 'beforePost' })}
             validFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
+            invalidFormBeforePost={(res) => console.log(res)}
             invalidFormAfterPost={this.handleForm.bind(this, { status: 'afterPost' })}
             postUrl={`http://localhost:${window.defaults.port}/download`}
             headers={{ 'Content-Type': 'application/json' }}>
@@ -77,11 +53,10 @@ class App extends React.Component {
               <div className='form-group'>
                 <label htmlFor='exportFormat'>Export format</label>
                 <Select
-                  type='text'
                   id='exportFormat'
                   name='exportFormat'
                   value='json'
-                  onChange={this.exportFormatOnChange.bind(this)}
+                  validations={validations.exportFormat}
                   className='form-control form-control-sm'>
                   <option value='json'>JSON</option>
                   <option value='csv'>CSV</option>
@@ -94,9 +69,8 @@ class App extends React.Component {
                   type='text'
                   id='exportPath'
                   name='exportPath'
-                  placeholder={this.state.exportPath}
-                  value={this.state.exportPath}
-                  onChange={this.exportPathOnChange.bind(this)}
+                  placeholder={window.defaults.exportPath}
+                  value={window.defaults.exportPath}
                   validations={validations.exportPath}
                   className='form-control form-control-sm' />
               </div>

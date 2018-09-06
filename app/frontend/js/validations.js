@@ -1,4 +1,10 @@
 const validations = {
+  exportFormat: [
+    {
+      rule: 'isLength',
+      args: { min: 1 }
+    }
+  ],
   exportPath: [
     {
       rule: 'isLength',
