@@ -11,7 +11,9 @@ class App extends React.Component {
 
     this.state = {
       downloadButtonTitle: 'Download',
-      isFormDisabled: false
+      isFormDisabled: false,
+      itemsAttributeOrPropertyLabel: 'Items attribute',
+      itemsAttributeOrPropertyPlaceholder: 'href'
     }
   }
 
@@ -31,6 +33,14 @@ class App extends React.Component {
         downloadButtonTitle: 'Download'
       })
     }
+  }
+
+  partOfItemsToScrapeOnChange (e) {
+    const value = e.target.value
+    this.setState({
+      itemsAttributeOrPropertyLabel: value === 'attribute' ? 'Items attribute' : 'Items property',
+      itemsAttributeOrPropertyPlaceholder: value === 'attribute' ? 'href' : 'textContent'
+    })
   }
 
   render () {
@@ -100,13 +110,27 @@ class App extends React.Component {
               </div>
 
               <div className='form-group'>
-                <label htmlFor='itemsAttributeToScrape'>Items attribute to scrape</label>
+                <label htmlFor='partOfItemsToScrape'>Part of items to scrape</label>
+                <Select
+                  id='partOfItemsToScrape'
+                  name='partOfItemsToScrape'
+                  value='attribute'
+                  onChange={this.partOfItemsToScrapeOnChange.bind(this)}
+                  validations={validations.partOfItemsToScrape}
+                  className='form-control form-control-sm'>
+                  <option value='attribute'>Attribute</option>
+                  <option value='property'>Property</option>
+                </Select>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='itemsAttributeOrProperty'>{this.state.itemsAttributeOrPropertyLabel}</label>
                 <Input
                   type='text'
-                  id='itemsAttributeToScrape'
-                  name='itemsAttributeToScrape'
-                  placeholder='href'
-                  validations={validations.itemsAttributeToScrape}
+                  id='itemsAttributeOrProperty'
+                  name='itemsAttributeOrProperty'
+                  placeholder={this.state.itemsAttributeOrPropertyPlaceholder}
+                  validations={validations.itemsAttributeOrProperty}
                   className='form-control form-control-sm' />
               </div>
 

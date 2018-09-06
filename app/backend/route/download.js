@@ -17,19 +17,19 @@ const getItemLinks = async (opts) => {
       const elements = Array.from(document.querySelectorAll(opts.itemsSelector))
       const el = {}
       elements.map((element, i) => {
-        el[i + 1] = element.getAttribute(opts.itemsAttributeToScrape)
+        el[i + 1] = opts.partOfItemsToScrape === 'attribute' ? element.getAttribute(opts.itemsAttributeOrProperty) : element[opts.itemsAttributeOrProperty]
       })
       return el
     }, opts)
 
-    await browser.close()
-
-    if (getItems.length) {
+    if (Object.keys(getItems).length) {
       result.success = true
       result.items = getItems
     } else {
       result.error = 'No items found'
     }
+
+    await browser.close()
 
     return result
   } catch (err) {
@@ -45,13 +45,15 @@ const download = async (req, res) => {
     const _getItemLinks = await getItemLinks(req.body)
 
     if (_getItemLinks.success) {
+      const items = _getItemLinks.items
+
       let exportFileContent
       if (req.body.exportFormat === 'json') {
-        exportFileContent = JSON.stringify(_getItemLinks)
+        exportFileContent = JSON.stringify(items)
       } else if (req.body.exportFormat === 'csv') {
         let str = `key,value\n`
-        Object.keys(_getItemLinks).map((key) => {
-          const value = _getItemLinks[key]
+        Object.keys(items).map((key) => {
+          const value = items[key]
           str += `${key},${value}\n`
         })
         exportFileContent = str

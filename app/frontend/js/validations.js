@@ -22,7 +22,13 @@ const validations = {
       args: { min: 1 }
     }
   ],
-  itemsAttributeToScrape: [
+  partOfItemsToScrape: [
+    {
+      rule: 'isLength',
+      args: { min: 1 }
+    }
+  ],
+  itemsAttributeOrProperty: [
     {
       rule: 'isLength',
       args: { min: 1 }
