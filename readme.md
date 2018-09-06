@@ -2,7 +2,7 @@
 
 A desktop app to scrape web pages
 
-<img src="preview.png?v=0.4.0" alt="travis preview" width="502" />
+<img src="https://raw.githubusercontent.com/ozgrozer/travis/master/preview.png?v=0.4.0" alt="travis preview" width="502" />
 
 ## Download
 
